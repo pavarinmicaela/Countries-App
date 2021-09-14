@@ -13,8 +13,14 @@ export class CountryService {
 
   constructor(private http: HttpClient) { }
 
-  searchCountry(query: string): Observable<Country[]> {
+  searchByName(query: string): Observable<Country[]> {
     const url = `${this.apiURL}/name/${query}`;
+
+    return this.http.get<Country[]>(url);
+  }
+
+  searchByCapital(query: string): Observable<Country[]> {
+    const url = `${this.apiURL}/capital/${query}`;
 
     return this.http.get<Country[]>(url);
   }
