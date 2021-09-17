@@ -14,12 +14,15 @@ export class ByCountryComponent {
   isError: boolean = false;
   countries: Country[] = [];
   placeholder: string = "Ingrese un país...";
+  suggestedCountries: Country[] = [];
+  showSuggestion: boolean = false;
 
   constructor(private countryService: CountryService) { }
 
   search(query: string) {
     this.isError = false;
     this.query = query;
+    this.showSuggestion = false;
     this.countryService.searchByName(this.query)
       .subscribe(
         (response) => {
@@ -34,6 +37,17 @@ export class ByCountryComponent {
 
   suggestion(query: string) {
     this.isError = false;
+    this.query = query;
+    this.showSuggestion = true;
+
+    this.countryService.searchByName(query)
+      .subscribe(
+        countries => { this.suggestedCountries = countries.splice(0, 5); },
+        error => {
+          this.isError = true;
+          this.suggestedCountries = [];
+        }
+      );
   }
 
 }

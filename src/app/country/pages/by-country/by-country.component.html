@@ -1,17 +1,32 @@
-<div class="row">
-    <div class="col">
-        <app-countries-searcher [placeholder]="placeholder" (onEnter)="search($event)" (onDebounce)="suggestion($event)"></app-countries-searcher>
+<div class="animate__animated animate__fadeIn">
+    <div class="row">
+        <div class=" col">
+            <app-countries-searcher [placeholder]="placeholder" (onEnter)="search($event)" (onDebounce)="suggestion($event)"></app-countries-searcher>
+        </div>
     </div>
-</div>
 
-<hr>
+    <ul *ngIf="showSuggestion" class="list-group">
+        <li *ngFor="let suggestedCountry of suggestedCountries" class="list-group-item list-group-item-action">
+            <a class="nav-link" [routerLink]="['/country', suggestedCountry.alpha2Code]">
+                {{ suggestedCountry.name }}
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action">
+            <a class="nav-link" (click)="search(query)">
+                Buscar "{{ query }}"
+            </a>
+        </li>
+    </ul>
 
-<div *ngIf="isError" class="alert alert-danger">
-    No se encontró ningun resultado para el criterio de búsqueda ingresado
-</div>
+    <hr>
 
-<div *ngIf="countries.length > 0" class="row">
-    <div class="col">
-        <app-countries-table [countries]="countries"></app-countries-table>
+    <div *ngIf="isError" class="alert alert-danger">
+        No se encontró ningun resultado para el criterio de búsqueda ingresado
+    </div>
+
+    <div *ngIf="countries.length > 0" class="row">
+        <div class="col">
+            <app-countries-table [countries]="countries"></app-countries-table>
+        </div>
     </div>
 </div>

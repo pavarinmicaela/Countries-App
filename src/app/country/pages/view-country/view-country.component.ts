@@ -24,11 +24,11 @@ export class ViewCountryComponent implements OnInit {
     this.activatedRoute.params
       .pipe(
         switchMap(({ id }) => this.countryService.getCountryByCode(id)),
-        tap(console.log) //pasa como parámetro a console.log() la respuesta de switchMap() y ejecuta la función
+        tap(console.log) //pasa como parámetro a console.log() la respuesta de switchMap() y ejecuta el método
       )
       .subscribe(country => this.country = country);
   }
-
+  /* Otra forma: */
   /* this.activatedRoute.params
     .subscribe(({ id }) => {
       console.log(id);
